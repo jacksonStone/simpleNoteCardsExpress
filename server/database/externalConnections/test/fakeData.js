@@ -28,8 +28,8 @@ describe('Verify set record',() => {
 			]);
 		const records = results[0];
 		const allRecords = results[1];
-		assert.equal(allRecords.length, lengthBeforeInsert + 1, 'Added a row');
-		assert.equal(records.length, 1, 'was able to then fetch the row');
+		assert.equal(allRecords.length, lengthBeforeInsert + 1);
+		assert.equal(records.length, 1);
 	})
 });
 describe('Verify get record', () => {

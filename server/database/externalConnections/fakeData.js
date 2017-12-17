@@ -1,5 +1,6 @@
 const _ = require('lodash');
 
+//password: somePassword
 let fakeData = {
 		user:[{
 			username:'user10', 
