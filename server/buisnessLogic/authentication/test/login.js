@@ -1,4 +1,3 @@
-'use strict'
 const login = require('../login');
 const assert = require('assert');
 const userName = 'user10';

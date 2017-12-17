@@ -11,24 +11,19 @@ describe('Cookie verification works', () => {
 	it('Happy path', ()=> {
 		const someText = JSON.stringify({username:userName, created: Date.now()});
 		const encryptedValue = authUtils.encrypt(someText);
-		const someCookies = ('some=thing; auth=' + encryptedValue);
-		const validatedCookie = cookieUtils.validateUserCookie(someCookies)
+		const validatedCookie = cookieUtils.validateUserCookie(encryptedValue)
 		assert.equal(validatedCookie,userName);
 	})
 	it('Expired', ()=> {
 		const someText = JSON.stringify({username:userName, created: Date.now() - 1000*60*60*24*60});
 		const encryptedValue = authUtils.encrypt(someText);
-		const someCookies = ('some=thing; auth=' + encryptedValue);
-		const validatedCookie = cookieUtils.validateUserCookie(someCookies)
-		assert.equal(validatedCookie,false);
+		const validatedCookie = cookieUtils.validateUserCookie(encryptedValue)
+		assert.equal(validatedCookie,undefined);
 	})
 	it('Verify cookie created', ()=> {
-		const cookie = cookieUtils.createUserCookie(userName);
-		const wholeCookieValue = cookie['Set-Cookie'];
-		const cookieParts = wholeCookieValue.split(';');
-		const cookieValue = cookieParts[0];
-		assert.equal(cookieValue.indexOf(authCookieName), 0);
-		const encryptedValue = cookieValue.substring(authCookieName.length + 1);
+		const cookie =  cookieUtils.createUserCookie(userName);
+		assert.equal(cookie.name, authCookieName);
+		const encryptedValue = cookie.value;
 		const decryptedValue = authUtils.decrypt(encryptedValue);
 		const value = JSON.parse(decryptedValue);
 		assert.equal(value.username,userName);

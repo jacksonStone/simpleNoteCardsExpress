@@ -1,4 +1,5 @@
 const authUtils = require('./utils');
+const cookieUtils = require('./cookie');
 const { User } = require('../../database');
 
 async function verify(username, plainTextPassword) {
@@ -8,7 +9,18 @@ async function verify(username, plainTextPassword) {
 	return hashResult === user.password;
 }
 
+function getLoginCookie(username) {
+	return cookieUtils.createUserCookie(username);
+}
+
+function getUser(authCookie) {
+	if (!authCookie) return;
+	return cookieUtils.validateUserCookie(authCookie)
+}
+
 
 module.exports = {
-	verify
+	verify,
+	getLoginCookie,
+	getUser
 }

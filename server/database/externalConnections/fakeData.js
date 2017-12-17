@@ -8,6 +8,7 @@ let fakeData = {
 			salt:'8b73210c-8004-45b0-88eb-768ced89fc57'
 		}]
 };
+const fakeDataBackup = _.cloneDeep(fakeData);
 
 function getRecord(table, conditions){
 	const tableData = fakeData[table];
@@ -37,5 +38,9 @@ function setFakeData(newFakeData) {
 	fakeData = newFakeData;
 }
 
+function resetData(){
+	fakeData = fakeDataBackup;
+}
 
-module.exports = { getRecord, setRecord, setFakeData };
+
+module.exports = { getRecord, setRecord, setFakeData, resetData };

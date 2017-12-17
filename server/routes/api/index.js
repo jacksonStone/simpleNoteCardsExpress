@@ -1,8 +1,8 @@
-var express = require('express')
-var router = express.Router()
+const express = require('express')
+const router = express.Router()
 
-router.get('/', function (req, res) {
-  res.send('API!')
-})
+const login = require('./login');
+
+router.use('/login',login);
 
 module.exports = router
