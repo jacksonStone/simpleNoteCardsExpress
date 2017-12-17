@@ -20,15 +20,13 @@ describe('Encryption -> Decryptions', () => {
 		assert.equal(decryptedValue,decryptedSecondValue);
 		assert.equal(decryptedValue,someText);
 	})
-	it('Should fail if tampered with', ()=> {
+	it('Should return false if tampered with', ()=> {
 		const someText = 'Heythereyoureanallstar';
 		const encryptedValue = authUtils.encrypt(someText);
 		const originalEncryptedParts = encryptedValue.split(':');
 		const integrityCompromisedTextParts = authUtils.encrypt("fakeText").split(':');
 		const firstTwo = integrityCompromisedTextParts.slice(0,2).join(':');
 		const tamperedVersion = [firstTwo, originalEncryptedParts[2]].join(':');
-		assert.throws(()=>{
-			authUtils.decrypt(tamperedVersion)
-		}, Error);
+		assert.equal(authUtils.decrypt(tamperedVersion), false);
 	})
 })

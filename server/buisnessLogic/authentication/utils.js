@@ -39,7 +39,7 @@ function encrypt(text){
  
 function decrypt(text){
 	if(!verifyBodyWithHMAC(text)) {
-		throw new Error('Data integrity compromised');
+		return false;
 	}
 	const parts = text.split(':');
 	const nonce = parts[0];
