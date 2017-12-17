@@ -49,4 +49,15 @@ function validateUserCookie(cookies) {
 	return false;
 }
 
-module.exports = { validateUserCookie }
+function createUserCookie(username) {
+	const now = Date.now();
+	const nowAsUTC = new Date(now).toUTCString();
+	var userCookie = {
+		username: username,
+		created: now
+	};
+	var encryptedCookied = authUtils.encrypt(JSON.stringify(userCookie));
+	return {'Set-Cookie':authCookieName+'='+encryptedCookied+'; HttpOnly; Expires='+nowAsUTC};
+}
+
+module.exports = { validateUserCookie, createUserCookie }
