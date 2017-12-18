@@ -15,7 +15,6 @@ router.post('/', async (req, res) => {
  	const cookie = getLoginCookie(username);
  	res.cookie(cookie.name, cookie.value, cookie.options);
  	res.sendStatus(200);
-
 });
 
 module.exports = router

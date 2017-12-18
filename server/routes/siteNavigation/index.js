@@ -1,8 +1,7 @@
 var express = require('express')
 var router = express.Router()
+const home = require('./pages/home');
 
-router.get('/', function (req, res) {
-  res.send('SITE NAVIGATION!')
-})
+router.use('/home', home);
 
 module.exports = router

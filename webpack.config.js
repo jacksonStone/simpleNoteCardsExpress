@@ -1,10 +1,13 @@
 const path = require('path');
 
 module.exports = {
-  entry: './client/js/ui/pages/home.js',
+  entry: { 
+    login: './client/js/ui/pages/login.js',
+    home: './client/js/ui/pages/home.js'
+  },
   watch: true,
   output: {
-    filename: 'home.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, './client/js/dist')
   },
   resolve: {

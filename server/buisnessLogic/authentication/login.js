@@ -13,14 +13,19 @@ function getLoginCookie(username) {
 	return cookieUtils.createUserCookie(username);
 }
 
-function getUser(authCookie) {
-	if (!authCookie) return;
-	return cookieUtils.validateUserCookie(authCookie)
+function getUsername(cookies) {
+	if (!cookies) return;
+	return cookieUtils.validateUserCookie(cookies)
 }
 
+function getUserFromCookies(cookies) {
+	const username = getUsername(cookies);
+	return User.getUser(username)
+}
 
 module.exports = {
 	verify,
 	getLoginCookie,
-	getUser
+	getUsername,
+	getUserFromCookies
 }

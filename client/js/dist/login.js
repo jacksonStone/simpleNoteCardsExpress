@@ -60,20 +60,14 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 8);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
-/* 0 */,
-/* 1 */,
-/* 2 */,
-/* 3 */,
-/* 4 */,
-/* 5 */,
-/* 6 */
+/* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const { request } = __webpack_require__(7);
+const { request } = __webpack_require__(1);
 
 const cache = {};
 
@@ -93,7 +87,7 @@ exports.api = api;
 exports.apiCached = apiCached;
 
 /***/ }),
-/* 7 */
+/* 1 */
 /***/ (function(module, exports) {
 
 function request(url, body) {
@@ -113,31 +107,84 @@ function request(url, body) {
 exports.request = request;
 
 /***/ }),
-/* 8 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const { getUser } = __webpack_require__(9);
+const { click } = __webpack_require__(3);
+const { grabFormData } = __webpack_require__(4);
+const { login } = __webpack_require__(6);
 
-getUser().then(console.log); 
+click('login', async (event) => {
+	event.preventDefault();
+	const formData = grabFormData('#login');
+	const payload = await login(formData);
+	console.log(payload);
+});
 
 /***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 3 */
+/***/ (function(module, exports) {
 
-const { getUserDetails } = __webpack_require__(10);
+window.sn = {
+	click: {},
+};
 
-exports.getUser = () => {
-	return getUserDetails();
+exports.click = (name, handler) => {
+	window.sn.click[name] = handler;
 };
 
 /***/ }),
-/* 10 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const { apiCached } = __webpack_require__(6);
+const { $ } = __webpack_require__(5);
+exports.grabFormData = function(selector) {
+	const formNode = $(selector);
+	if (!formNode) {
+		throw new Error('Bad form selector give');
+	}
+	const formData = new FormData($(selector));
+	const entries = formData.entries();
+	const data = {};
+	for(let pair of entries) {
+		data[pair[0]] = pair[1];
+	}
+	return data;
+}
 
-exports.getUserDetails = () => {
-	return apiCached('user/me');
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+exports.$ = function(){
+	return document.querySelector.apply(document, arguments);
+}
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const { login } = __webpack_require__(7);
+
+exports.login = async (payload) => {
+	const username = payload.username;
+	const password = payload.password;
+	if (!username || !password) throw new Error('Invalid arguments');
+	const res = await login(username, password);
+	console.log(res);
+};
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const { api } = __webpack_require__(0);
+
+exports.login = async (username, password) => {
+	const result = await api('login', { username, password })
+	if (result) {
+		window.location.href = '/site/home';
+	}
 }
 
 /***/ })

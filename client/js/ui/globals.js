@@ -2,6 +2,6 @@ window.sn = {
 	click: {},
 };
 
-exports.click = function(name, handler) {
+exports.click = (name, handler) => {
 	window.sn.click[name] = handler;
 };

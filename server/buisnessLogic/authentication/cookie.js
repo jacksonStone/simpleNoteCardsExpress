@@ -18,7 +18,9 @@ function checkCookieExperation(deCookieContent){
 	return false;
 }
 
-function validateUserCookie(authCookie) {
+function validateUserCookie(cookies) {
+	if(!cookies || !cookies.auth) return;
+	const authCookie = cookies.auth;
 	const decryptedCookie = authUtils.decrypt(authCookie);
 	const youngCookie = checkCookieExperation(decryptedCookie);
 	if(youngCookie) {

@@ -10,27 +10,30 @@ let fakeData = {
 };
 const fakeDataBackup = _.cloneDeep(fakeData);
 
-function getRecord(table, conditions){
+async function getRecord(table, conditions){
 	const tableData = fakeData[table];
 	if (!tableData) return;
-	if (!conditions) return Promise.resolve(tableData);
-	return Promise.resolve(_.filter(tableData, dbEntry=> {
-		let match = true;
-		_.each(conditions, (conditionValue, conditionKey) => {
-			if(dbEntry[conditionKey] !== conditionValue) { 
-				match = false; 
-				return false;
-			}
-		});
-		return match;
-	}));
+	return _.map(
+		_.filter(tableData, dbEntry=> {
+			let match = true;
+			_.each(conditions, (conditionValue, conditionKey) => {
+				if(dbEntry[conditionKey] !== conditionValue) { 
+					match = false; 
+					return false;
+				}
+			});
+			return match;
+		}), v => {
+			return _.cloneDeep(v)
+		}
+	);
 }
 
-function setRecord(table, values){
+async function setRecord(table, values){
 	const tableData = fakeData[table];
 	if (!tableData) return;
 	tableData.push(values);
-	return Promise.resolve(values);
+	return values;
 }
 
 //For testing

@@ -11,13 +11,14 @@ describe('Cookie verification works', () => {
 	it('Happy path', ()=> {
 		const someText = JSON.stringify({username:userName, created: Date.now()});
 		const encryptedValue = authUtils.encrypt(someText);
-		const validatedCookie = cookieUtils.validateUserCookie(encryptedValue)
+		const validatedCookie = cookieUtils.validateUserCookie({[authCookieName]: encryptedValue})
 		assert.equal(validatedCookie,userName);
 	})
 	it('Expired', ()=> {
 		const someText = JSON.stringify({username:userName, created: Date.now() - 1000*60*60*24*60});
 		const encryptedValue = authUtils.encrypt(someText);
-		const validatedCookie = cookieUtils.validateUserCookie(encryptedValue)
+
+		const validatedCookie = cookieUtils.validateUserCookie({[authCookieName]: encryptedValue})
 		assert.equal(validatedCookie,undefined);
 	})
 	it('Verify cookie created', ()=> {
