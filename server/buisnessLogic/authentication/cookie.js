@@ -47,4 +47,15 @@ function createUserCookie(username) {
 	};
 }
 
-module.exports = { validateUserCookie, createUserCookie }
+function createUserLoggedOutCookie(){
+	return {
+		value: '',
+		name: authCookieName,
+		options: {
+			maxAge: experation, 
+			httpOnly: true,
+		}
+	};
+}
+
+module.exports = { validateUserCookie, createUserCookie, createUserLoggedOutCookie }

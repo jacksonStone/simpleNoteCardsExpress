@@ -23,8 +23,13 @@ function getUserFromCookies(cookies) {
 	return User.getUser(username)
 }
 
+function getLogoutCookie() {
+	return cookieUtils.createUserLoggedOutCookie();
+}
+
 module.exports = {
 	verify,
+	getLogoutCookie,
 	getLoginCookie,
 	getUsername,
 	getUserFromCookies

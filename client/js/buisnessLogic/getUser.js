@@ -1,5 +1,7 @@
 const { getUserDetails } = require('api/getUserDetails');
-
-exports.getUser = () => {
-	return getUserDetails();
+let userDetails;
+exports.getUser = async () => {
+	if(userDetails) return userDetails;
+	userDetails = await getUserDetails();
+	return userDetails;
 };

@@ -1,5 +1,5 @@
 function request(url, body) {
-	const method = body ? 'POST' : 'GET'
+  const method = body ? 'POST' : 'GET'
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest()
     xhr.open(method, url)

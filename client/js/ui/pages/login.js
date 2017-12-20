@@ -1,10 +1,15 @@
 const { click } = require('../globals');
 const { grabFormData } = require('abstract/grabForm');
-const { login } = require('logic/login');
+const { login, signup } = require('logic/login');
 
-click('login', async (event) => {
+click('login', (event) => {
 	event.preventDefault();
 	const formData = grabFormData('#login');
-	const payload = await login(formData);
-	console.log(payload);
+	login(formData);
+});
+
+click('signup', (event) => {
+	event.preventDefault();
+	const formData = grabFormData('#signup');
+	signup(formData);
 });

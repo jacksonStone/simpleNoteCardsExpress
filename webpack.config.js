@@ -14,7 +14,8 @@ module.exports = {
     alias: {
       'node_modules': path.join(__dirname, 'node_modules'),
       'logic':path.join(__dirname, 'client/js/buisnessLogic'),
-      'api':path.join(__dirname, 'client/js/api'),
+      'api':path.join(__dirname, 'client/js/routes/api'),
+      'site':path.join(__dirname, 'client/js/routes/navigation'),
       'abstract':path.join(__dirname, 'client/js/browserAbstractions')
     }
   }

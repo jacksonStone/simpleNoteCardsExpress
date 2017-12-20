@@ -60,69 +60,11 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 9);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const { request } = __webpack_require__(1);
-
-const cache = {};
-
-function api(url, body) {
-	return request('/api/' + url, body);
-};
-
-async function apiCached(url) {
-	if(cache[url]) return cache[url];
-	const result = await api(url);
-	cache[url] = result;
-	return result;
-}
-
-
-exports.api = api;
-exports.apiCached = apiCached;
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
-function request(url, body) {
-	const method = body ? 'POST' : 'GET'
-  return new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest()
-    xhr.open(method, url)
-    xhr.onload = () => resolve(xhr.responseText)
-    xhr.onerror = () => reject(xhr.statusText)
-    if(body) {
-    	xhr.setRequestHeader('Content-Type', 'application/json')
-    }
-    xhr.send(body ? JSON.stringify(body) : undefined);
-  })
-}
-
-exports.request = request;
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const { click } = __webpack_require__(3);
-const { grabFormData } = __webpack_require__(4);
-const { login } = __webpack_require__(6);
-
-click('login', async (event) => {
-	event.preventDefault();
-	const formData = grabFormData('#login');
-	const payload = await login(formData);
-	console.log(payload);
-});
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports) {
 
 window.sn = {
@@ -134,10 +76,10 @@ exports.click = (name, handler) => {
 };
 
 /***/ }),
-/* 4 */
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const { $ } = __webpack_require__(5);
+const { $ } = __webpack_require__(2);
 exports.grabFormData = function(selector) {
 	const formNode = $(selector);
 	if (!formNode) {
@@ -153,7 +95,7 @@ exports.grabFormData = function(selector) {
 }
 
 /***/ }),
-/* 5 */
+/* 2 */
 /***/ (function(module, exports) {
 
 exports.$ = function(){
@@ -161,31 +103,170 @@ exports.$ = function(){
 }
 
 /***/ }),
-/* 6 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const { login } = __webpack_require__(7);
+const { login, logout, signup } = __webpack_require__(4);
+const code = __webpack_require__(11);
+const pages = __webpack_require__(7);
 
 exports.login = async (payload) => {
 	const username = payload.username;
 	const password = payload.password;
 	if (!username || !password) throw new Error('Invalid arguments');
-	const res = await login(username, password);
-	console.log(res);
+	const result = await login(username, password);
+	if (code.ok(result)) {
+		pages.home();
+	}
+	console.log('From Login: ');
+	console.error(result);
+
+	//TODO::Handle bad input
 };
+
+exports.signup = async (payload) => {
+	const username = payload.username;
+	const password = payload.password;
+	if (!username || !password) throw new Error('Invalid arguments');
+	const result = await signup(username, password);
+	if (code.ok(result)) {
+		pages.home();
+	}
+	console.log('From Signup: ');
+	console.error(result);
+
+	//TODO::Handle bad input
+}
+
+exports.logout = async () => {
+	await logout();
+	pages.landingPage();
+}
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const { api } = __webpack_require__(5);
+
+exports.login = (username, password) => {
+	return api('login', { username, password })
+}
+
+exports.logout = () => {
+	return api('logout');
+}
+
+exports.signup = (username, password) => { 
+	return api('signup', { username, password })
+}
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const { request } = __webpack_require__(6);
+
+function api(url, body) {
+	return request('/api/' + url, body);
+};
+
+exports.api = api;
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+function request(url, body) {
+  const method = body ? 'POST' : 'GET'
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest()
+    xhr.open(method, url)
+    xhr.onload = () => resolve(xhr.responseText)
+    xhr.onerror = () => reject(xhr.statusText)
+    if(body) {
+    	xhr.setRequestHeader('Content-Type', 'application/json')
+    }
+    xhr.send(body ? JSON.stringify(body) : undefined);
+  })
+}
+
+exports.request = request;
 
 /***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const { api } = __webpack_require__(0);
+const { redirect } = __webpack_require__(8);
 
-exports.login = async (username, password) => {
-	const result = await api('login', { username, password })
-	if (result) {
-		window.location.href = '/site/home';
+function setUpRoute(route) {
+	route = '/site/' + route;
+	return function() {
+		redirect(route);
 	}
 }
+
+function landingPage(){
+	redirect('/');
+}
+
+exports.landingPage = landingPage;
+
+//Pages
+exports.home = setUpRoute('home');
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports) {
+
+function redirect(href) {
+  window.location.href = href;
+}
+
+exports.redirect = redirect;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const { click } = __webpack_require__(0);
+const { grabFormData } = __webpack_require__(1);
+const { login, signup } = __webpack_require__(3);
+
+click('login', (event) => {
+	event.preventDefault();
+	const formData = grabFormData('#login');
+	login(formData);
+});
+
+click('signup', (event) => {
+	event.preventDefault();
+	const formData = grabFormData('#signup');
+	signup(formData);
+});
+
+/***/ }),
+/* 10 */,
+/* 11 */
+/***/ (function(module, exports) {
+
+function ok(response) {
+	return response === 'OK';
+}
+
+function badInput(response) {
+	return response === 'Bad Request';
+}
+
+function unathorized(response) {
+	return response === 'Unathorized';
+}
+
+exports.ok = ok;
+exports.badInput = badInput;
+exports.unathorized = unathorized;
 
 /***/ })
 /******/ ]);

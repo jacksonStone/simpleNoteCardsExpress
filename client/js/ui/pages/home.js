@@ -1,3 +1,8 @@
-const { getUser } = require('logic/getUser');
+const { click } = require('../globals');
+const { grabFormData } = require('abstract/grabForm');
+const { logout } = require('logic/login');
 
-getUser().then(console.log); 
+click('logout', (event) => {
+	event.preventDefault();
+	logout();
+});
