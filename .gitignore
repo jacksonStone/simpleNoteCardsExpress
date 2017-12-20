@@ -2,6 +2,8 @@
 logs
 *.log
 npm-debug.log*
+.DS_Store
+**/dist
 yarn-debug.log*
 yarn-error.log*
 
