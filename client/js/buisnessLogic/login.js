@@ -8,7 +8,7 @@ exports.login = async (payload) => {
 	if (!username || !password) throw new Error('Invalid arguments');
 	const result = await login(username, password);
 	if (code.ok(result)) {
-		pages.home();
+		return pages.home();
 	}
 	console.log('From Login: ');
 	console.error(result);
@@ -22,7 +22,7 @@ exports.signup = async (payload) => {
 	if (!username || !password) throw new Error('Invalid arguments');
 	const result = await signup(username, password);
 	if (code.ok(result)) {
-		pages.home();
+		return pages.home();
 	}
 	console.log('From Signup: ');
 	console.error(result);

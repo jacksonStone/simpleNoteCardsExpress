@@ -3,6 +3,7 @@ const path = require('path');
 module.exports = {
   entry: { 
     login: './client/js/ui/pages/login.js',
+    test: './client/js/tests/testSuite.js',
     home: './client/js/ui/pages/home.js'
   },
   watch: true,

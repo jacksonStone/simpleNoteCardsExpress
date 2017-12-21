@@ -6,7 +6,7 @@ const code = require('../../nodeAbstractions/responseCodes');
 
 router.get('/', (_, res) => {
 	addCookie(res, getLogoutCookie());
-	code.ok(200);
+	code.ok(res);
 });
 
 module.exports = router

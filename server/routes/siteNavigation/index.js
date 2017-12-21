@@ -1,7 +1,8 @@
 var express = require('express')
 var router = express.Router()
-const home = require('./pages/home');
 
-router.use('/home', home);
+
+router.use('/home', require('./pages/home'));
+router.use('/test', require('./pages/test'));
 
 module.exports = router

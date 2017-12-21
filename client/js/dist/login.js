@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 9);
+/******/ 	return __webpack_require__(__webpack_require__.s = 10);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -69,10 +69,28 @@
 
 window.sn = {
 	click: {},
+	test: false,
+	testRoutes : []
 };
 
 exports.click = (name, handler) => {
 	window.sn.click[name] = handler;
+};
+
+exports.makeTesting = () => {
+	window.sn.test = true;
+};
+
+exports.testing = {
+	isTesting() {
+		return window.sn.test;
+	},
+	addTestRoute(route){
+		return window.sn.testRoutes.push(route);
+	},
+	getTestRoutes(){
+		return window.sn.testRoutes;
+	}
 };
 
 /***/ }),
@@ -107,8 +125,8 @@ exports.$ = function(){
 /***/ (function(module, exports, __webpack_require__) {
 
 const { login, logout, signup } = __webpack_require__(4);
-const code = __webpack_require__(11);
-const pages = __webpack_require__(7);
+const code = __webpack_require__(7);
+const pages = __webpack_require__(8);
 
 exports.login = async (payload) => {
 	const username = payload.username;
@@ -116,7 +134,7 @@ exports.login = async (payload) => {
 	if (!username || !password) throw new Error('Invalid arguments');
 	const result = await login(username, password);
 	if (code.ok(result)) {
-		pages.home();
+		return pages.home();
 	}
 	console.log('From Login: ');
 	console.error(result);
@@ -130,7 +148,7 @@ exports.signup = async (payload) => {
 	if (!username || !password) throw new Error('Invalid arguments');
 	const result = await signup(username, password);
 	if (code.ok(result)) {
-		pages.home();
+		return pages.home();
 	}
 	console.log('From Signup: ');
 	console.error(result);
@@ -196,60 +214,6 @@ exports.request = request;
 
 /***/ }),
 /* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const { redirect } = __webpack_require__(8);
-
-function setUpRoute(route) {
-	route = '/site/' + route;
-	return function() {
-		redirect(route);
-	}
-}
-
-function landingPage(){
-	redirect('/');
-}
-
-exports.landingPage = landingPage;
-
-//Pages
-exports.home = setUpRoute('home');
-
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports) {
-
-function redirect(href) {
-  window.location.href = href;
-}
-
-exports.redirect = redirect;
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const { click } = __webpack_require__(0);
-const { grabFormData } = __webpack_require__(1);
-const { login, signup } = __webpack_require__(3);
-
-click('login', (event) => {
-	event.preventDefault();
-	const formData = grabFormData('#login');
-	login(formData);
-});
-
-click('signup', (event) => {
-	event.preventDefault();
-	const formData = grabFormData('#signup');
-	signup(formData);
-});
-
-/***/ }),
-/* 10 */,
-/* 11 */
 /***/ (function(module, exports) {
 
 function ok(response) {
@@ -267,6 +231,72 @@ function unathorized(response) {
 exports.ok = ok;
 exports.badInput = badInput;
 exports.unathorized = unathorized;
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const { redirect } = __webpack_require__(9);
+function setUpRoute(route) {
+	route = '/site/' + route;
+	const routeFunction = function() {
+		redirect(route);
+	}
+	//is for testing
+	routeFunction.getRouteAsString = function(){
+		return route;
+	}
+	return routeFunction;
+}
+
+function landingPage(){
+	redirect('/');
+}
+landingPage.getRouteAsString = function(){
+	return '/';
+}
+
+
+//Pages
+exports.landingPage = landingPage;
+exports.home = setUpRoute('home');
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const { testing } = __webpack_require__(0);
+
+function redirect(href) {
+	if(testing.isTesting) {
+		testing.addTestRoute(href);
+		return;
+	}
+  window.location.href = href;
+}
+
+exports.redirect = redirect;
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const { click } = __webpack_require__(0);
+const { grabFormData } = __webpack_require__(1);
+const { login, signup } = __webpack_require__(3);
+
+click('login', (event) => {
+	event.preventDefault();
+	const formData = grabFormData('#login');
+	login(formData);
+});
+
+click('signup', (event) => {
+	event.preventDefault();
+	const formData = grabFormData('#signup');
+	signup(formData);
+});
 
 /***/ })
 /******/ ]);
