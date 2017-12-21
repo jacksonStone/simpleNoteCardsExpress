@@ -21,5 +21,11 @@ exports.testing = {
 	},
 	getTestRoutes(){
 		return window.sn.testRoutes;
+	},
+	lastRoute(){
+		const length = window.sn.testRoutes.length;
+		if(length) {
+			return window.sn.testRoutes[ length - 1 ];
+		}
 	}
 };

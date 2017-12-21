@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 14);
+/******/ 	return __webpack_require__(__webpack_require__.s = 19);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -90,6 +90,12 @@ exports.testing = {
 	},
 	getTestRoutes(){
 		return window.sn.testRoutes;
+	},
+	lastRoute(){
+		const length = window.sn.testRoutes.length;
+		if(length) {
+			return window.sn.testRoutes[ length - 1 ];
+		}
 	}
 };
 
@@ -97,36 +103,22 @@ exports.testing = {
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const { $ } = __webpack_require__(2);
-exports.grabFormData = function(selector) {
-	const formNode = $(selector);
-	if (!formNode) {
-		throw new Error('Bad form selector give');
-	}
-	const formData = new FormData($(selector));
-	const entries = formData.entries();
-	const data = {};
-	for(let pair of entries) {
-		data[pair[0]] = pair[1];
-	}
-	return data;
-}
+const { request } = __webpack_require__(5);
+
+function api(url, body) {
+	return request('/api/' + url, body);
+};
+
+exports.api = api;
+
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports) {
-
-exports.$ = function(){
-	return document.querySelector.apply(document, arguments);
-}
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const { login, logout, signup } = __webpack_require__(4);
-const code = __webpack_require__(7);
-const pages = __webpack_require__(8);
+const code = __webpack_require__(6);
+const pages = __webpack_require__(3);
 
 exports.login = async (payload) => {
 	const username = payload.username;
@@ -162,81 +154,10 @@ exports.logout = async () => {
 }
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const { api } = __webpack_require__(5);
-
-exports.login = (username, password) => {
-	return api('login', { username, password })
-}
-
-exports.logout = () => {
-	return api('logout');
-}
-
-exports.signup = (username, password) => { 
-	return api('signup', { username, password })
-}
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const { request } = __webpack_require__(6);
-
-function api(url, body) {
-	return request('/api/' + url, body);
-};
-
-exports.api = api;
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports) {
-
-function request(url, body) {
-  const method = body ? 'POST' : 'GET'
-  return new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest()
-    xhr.open(method, url)
-    xhr.onload = () => resolve(xhr.responseText)
-    xhr.onerror = () => reject(xhr.statusText)
-    if(body) {
-    	xhr.setRequestHeader('Content-Type', 'application/json')
-    }
-    xhr.send(body ? JSON.stringify(body) : undefined);
-  })
-}
-
-exports.request = request;
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-function ok(response) {
-	return response === 'OK';
-}
-
-function badInput(response) {
-	return response === 'Bad Request';
-}
-
-function unathorized(response) {
-	return response === 'Unathorized';
-}
-
-exports.ok = ok;
-exports.badInput = badInput;
-exports.unathorized = unathorized;
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const { redirect } = __webpack_require__(9);
+const { redirect } = __webpack_require__(7);
 function setUpRoute(route) {
 	route = '/site/' + route;
 	const routeFunction = function() {
@@ -263,7 +184,65 @@ exports.home = setUpRoute('home');
 
 
 /***/ }),
-/* 9 */
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const { api } = __webpack_require__(1);
+
+exports.login = (username, password) => {
+	return api('login', { username, password })
+}
+
+exports.logout = () => {
+	return api('logout');
+}
+
+exports.signup = (username, password) => { 
+	return api('signup', { username, password })
+}
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+function request(url, body) {
+  const method = body ? 'POST' : 'GET'
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest()
+    xhr.open(method, url)
+    xhr.onload = () => resolve(xhr.responseText)
+    xhr.onerror = () => reject(xhr.statusText)
+    if(body) {
+    	xhr.setRequestHeader('Content-Type', 'application/json')
+    }
+    xhr.send(body ? JSON.stringify(body) : undefined);
+  })
+}
+
+exports.request = request;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+function ok(response) {
+	return response === 'OK';
+}
+
+function badInput(response) {
+	return response === 'Bad Request';
+}
+
+function unathorized(response) {
+	return response === 'Unathorized';
+}
+
+exports.ok = ok;
+exports.badInput = badInput;
+exports.unathorized = unathorized;
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const { testing } = __webpack_require__(0);
@@ -279,16 +258,48 @@ function redirect(href) {
 exports.redirect = redirect;
 
 /***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const { $ } = __webpack_require__(9);
+exports.grabFormData = function(selector) {
+	const formNode = $(selector);
+	if (!formNode) {
+		throw new Error('Bad form selector give');
+	}
+	const formData = new FormData($(selector));
+	const entries = formData.entries();
+	const data = {};
+	for(let pair of entries) {
+		data[pair[0]] = pair[1];
+	}
+	return data;
+}
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+exports.$ = function(){
+	return document.querySelector.apply(document, arguments);
+}
+
+/***/ }),
 /* 10 */,
 /* 11 */,
 /* 12 */,
 /* 13 */,
-/* 14 */
+/* 14 */,
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */,
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const { click } = __webpack_require__(0);
-const { grabFormData } = __webpack_require__(1);
-const { logout } = __webpack_require__(3);
+const { grabFormData } = __webpack_require__(8);
+const { logout } = __webpack_require__(2);
 
 click('logout', (event) => {
 	event.preventDefault();

@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const { getUserDetails } = require('../../buisnessLogic/getUserDetails');
+const { getUserDetails } = require('../../buisnessLogic/users/getUserDetails');
 
 router.get('/me', async (req, res) => {
-	const user = await getUserDetails(req.cookies);
+	console.log(req.username);
+	const user = await getUserDetails(req.username);
  	res.send(user);
  	res.end();
 });
