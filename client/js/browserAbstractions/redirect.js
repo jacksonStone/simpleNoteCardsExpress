@@ -1,7 +1,8 @@
 const { testing } = require('../ui/globals');
 
 function redirect(href) {
-	if(testing.isTesting) {
+	debugger;
+	if(testing.isTesting()) {
 		testing.addTestRoute(href);
 		return;
 	}

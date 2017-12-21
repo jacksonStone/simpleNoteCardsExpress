@@ -248,7 +248,8 @@ exports.unathorized = unathorized;
 const { testing } = __webpack_require__(0);
 
 function redirect(href) {
-	if(testing.isTesting) {
+	debugger;
+	if(testing.isTesting()) {
 		testing.addTestRoute(href);
 		return;
 	}
