@@ -11,6 +11,11 @@ module.exports = {
     filename: '[name].js',
     path: path.resolve(__dirname, './client/js/dist')
   },
+  module: {
+    loaders: [
+      { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ }
+    ]
+  },
   resolve: {
     alias: {
       'node_modules': path.join(__dirname, 'node_modules'),

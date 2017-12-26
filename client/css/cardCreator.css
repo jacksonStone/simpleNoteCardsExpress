@@ -1,0 +1,17 @@
+	.cke_toolbox {
+		float:right;
+	}
+	.cke_bottom {
+		display:none;
+	}
+	.cke_top {
+		border-bottom: none;
+	}
+	.cke_editable
+	{
+		font-size: 35px;
+	}
+	.editor-holder {
+		max-width: 60%;
+		margin: 0 auto;
+	}

@@ -1,12 +1,12 @@
 <div>Greetings!</div>
 <button onclick="return sn.click.logout(event);">logout</button>
-<textarea name="content" id="editor"></textarea>
-<script src="https://cdn.ckeditor.com/ckeditor5/1.0.0-alpha.2/classic/ckeditor.js"></script>
+<div class="editor-holder question">
+	<textarea name="content" id="question"></textarea>
+</div>
+<div class="editor-holder answer">
+	<textarea name="content" id="answer"></textarea>
+</div>
+<div id='react-test'></div>
+<script src="/nm/ckeditor/ckeditor.js"></script>
 <script src="/js/dist/home.js"></script>
-<script>
-    ClassicEditor
-        .create( document.querySelector( '#editor' ) )
-        .catch( error => {
-            console.error( error );
-        } );
-</script>
+<link href="/css/cardCreator.css" rel="stylesheet"/>

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 10);
+/******/ 	return __webpack_require__(__webpack_require__.s = 16);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -103,7 +103,7 @@ exports.testing = {
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const { request } = __webpack_require__(5);
+const { request } = __webpack_require__(6);
 
 function api(url, body) {
 	return request('/api/' + url, body);
@@ -116,8 +116,8 @@ exports.api = api;
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const { login, logout, signup } = __webpack_require__(4);
-const code = __webpack_require__(6);
+const { login, logout, signup } = __webpack_require__(5);
+const code = __webpack_require__(7);
 const pages = __webpack_require__(3);
 
 exports.login = async (payload) => {
@@ -157,7 +157,7 @@ exports.logout = async () => {
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const { redirect } = __webpack_require__(7);
+const { redirect } = __webpack_require__(8);
 function setUpRoute(route) {
 	route = '/site/' + route;
 	const routeFunction = function() {
@@ -184,7 +184,8 @@ exports.home = setUpRoute('home');
 
 
 /***/ }),
-/* 4 */
+/* 4 */,
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const { api } = __webpack_require__(1);
@@ -202,7 +203,7 @@ exports.signup = (username, password) => {
 }
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports) {
 
 function request(url, body) {
@@ -222,7 +223,7 @@ function request(url, body) {
 exports.request = request;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports) {
 
 function ok(response) {
@@ -242,7 +243,7 @@ exports.badInput = badInput;
 exports.unathorized = unathorized;
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const { testing } = __webpack_require__(0);
@@ -259,10 +260,10 @@ function redirect(href) {
 exports.redirect = redirect;
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const { $ } = __webpack_require__(9);
+const { $ } = __webpack_require__(10);
 exports.grabFormData = function(selector) {
 	const formNode = $(selector);
 	if (!formNode) {
@@ -278,7 +279,7 @@ exports.grabFormData = function(selector) {
 }
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports) {
 
 exports.$ = function(){
@@ -286,11 +287,16 @@ exports.$ = function(){
 }
 
 /***/ }),
-/* 10 */
+/* 11 */,
+/* 12 */,
+/* 13 */,
+/* 14 */,
+/* 15 */,
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const { click } = __webpack_require__(0);
-const { grabFormData } = __webpack_require__(8);
+const { grabFormData } = __webpack_require__(9);
 const { login, signup } = __webpack_require__(2);
 
 click('login', (event) => {
