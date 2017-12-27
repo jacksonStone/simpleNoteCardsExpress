@@ -2,9 +2,9 @@ const path = require('path');
 
 module.exports = {
   entry: { 
-    login: './client/js/ui/pages/login.js',
+    landing: './client/js/ui/pages/landing.jsx',
     test: './client/js/tests/testSuite.js',
-    home: './client/js/ui/pages/home.js'
+    home: './client/js/ui/pages/home.jsx'
   },
   watch: true,
   output: {
@@ -22,6 +22,7 @@ module.exports = {
       'logic':path.join(__dirname, 'client/js/buisnessLogic'),
       'api':path.join(__dirname, 'client/js/routes/api'),
       'site':path.join(__dirname, 'client/js/routes/navigation'),
+      'component':path.join(__dirname, 'client/js/ui/components'),
       'abstract':path.join(__dirname, 'client/js/browserAbstractions')
     }
   }

@@ -1,7 +1,16 @@
 const { getUserDetails } = require('api/getUserDetails');
 let userDetails;
-exports.getUser = async () => {
+exports.fetchUser = async () => {
 	if(userDetails) return userDetails;
-	userDetails = JSON.parse(await getUserDetails());
+	const userDetailsUnformatted = await getUserDetails();
+	console.log(userDetailsUnformatted);
+	try {
+		userDetails = JSON.parse(userDetailsUnformatted);
+	} catch(e){
+		return userDetailsUnformatted;	
+	}
+	return userDetails;
+};
+exports.getUser = () => {
 	return userDetails;
 };
