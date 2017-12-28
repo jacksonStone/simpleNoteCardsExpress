@@ -11,6 +11,11 @@ async function getSafeUser(username) {
 	return trimUnsafeParameters(user);
 }
 
+async function userExists(username) {
+	const user = await getUser(username);
+	return !!user;
+}
+
 function trimUnsafeParameters(user) {
 	if (!user) return user;
 	delete user['password'];
@@ -27,5 +32,6 @@ async function createUser(username, salt, password) {
 module.exports = {
 	getUser,
 	createUser,
+	userExists,
 	getSafeUser
 }

@@ -11,6 +11,7 @@ describe('Authentication flow', () => {
 		equal(testing.lastRoute(), landingPage.getRouteAsString());
 	});
 	it('Signup flow', async ()=> {
+		await loginLogic.logout();
 		const userName = 'user' + Math.random();
 		await loginLogic.signup(userName, 'somePassword');
 		const userInfo = await fetchUser();

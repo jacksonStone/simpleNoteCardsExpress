@@ -1,9 +1,9 @@
 const { getCards, createCard } = require('api/cards');
 
-exports.getCards = async () => {
-	return JSON.parse(await getCards());
+exports.getCards = async (deck) => {
+	return JSON.parse(await getCards(deck));
 };
 
-exports.createCard = (content) => {
-	return createCard(content);
+exports.createCard = (deckName, body) => {
+	return createCard(deckName, body);
 };

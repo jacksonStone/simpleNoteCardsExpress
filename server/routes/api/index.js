@@ -6,5 +6,6 @@ router.use('/logout', require('./logout'));
 router.use('/user', require('./user'));
 router.use('/signup', require('./signup'));
 router.use('/cards', require('./cards'));
+router.use('/decks', require('./decks'));
 
 module.exports = router

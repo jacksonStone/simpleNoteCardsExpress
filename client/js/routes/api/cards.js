@@ -1,9 +1,9 @@
 const { api } = require('./apiRequest');
 
-exports.getCards = () => {
-	return api('cards/me');
+exports.getCards = (deck) => {
+	return api('cards/me?deck=' + deck);
 }
 
-exports.createCard = (content) => {
-	return api('cards/create', content);
+exports.createCard = (deckName, content) => {
+	return api('cards/create', {deck: deckName, content});
 }

@@ -1,16 +1,33 @@
 const { getUserDetails } = require('api/getUserDetails');
 let userDetails;
-exports.fetchUser = async () => {
+
+async function fetchUser(){
 	if(userDetails) return userDetails;
 	const userDetailsUnformatted = await getUserDetails();
-	console.log(userDetailsUnformatted);
 	try {
 		userDetails = JSON.parse(userDetailsUnformatted);
 	} catch(e){
 		return userDetailsUnformatted;	
 	}
 	return userDetails;
-};
-exports.getUser = () => {
+}
+
+function clearUserData(){
+	userDetails = undefined;
+}
+
+function fetchUserNoCache(){
+	clearUserData();
+	return fetchUser();
+}
+
+function getUser(){
 	return userDetails;
+}
+
+module.exports = {
+	fetchUser,
+	fetchUserNoCache,
+	clearUserData,
+	getUser
 };
