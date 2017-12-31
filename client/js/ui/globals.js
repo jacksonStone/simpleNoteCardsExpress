@@ -1,11 +1,6 @@
 window.sn = {
-	click: {},
 	test: false,
 	testRoutes : []
-};
-
-exports.click = (name, handler) => {
-	window.sn.click[name] = handler;
 };
 
 exports.makeTesting = () => {

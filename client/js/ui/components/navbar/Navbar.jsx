@@ -5,7 +5,6 @@ const Signup = require('component/navbar/SignupButton.jsx');
 const { getUser } = require('logic/getUser');
 function Navbar() {
 	const user = getUser();
-	console.log(user);
 	return (
 		<div className="navbar"> 
 			{
