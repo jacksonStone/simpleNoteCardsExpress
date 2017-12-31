@@ -20,5 +20,10 @@ function getEditorData(elementId) {
 	return CKEDITOR.instances[elementId].getData();
 }
 
+function unrenderEditor(elementId) {
+	return CKEDITOR.instances[elementId].destroy();
+}
+
 exports.initEditor = initEditor;
 exports.getEditorData = getEditorData;
+exports.unrenderEditor = unrenderEditor;
