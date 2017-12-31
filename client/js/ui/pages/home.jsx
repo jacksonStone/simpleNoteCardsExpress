@@ -1,6 +1,5 @@
 const React = require('react');
 const { render } = require('./pageRender.jsx');
+const FullCardEditor = require('component/cards/editor/FullCardEditor.jsx');
 
-render(<div>HOME PAGE</div>);
-// initEditor('question');
-// initEditor('answer');
+render(<div><div>HOME PAGE</div><FullCardEditor/></div>);
