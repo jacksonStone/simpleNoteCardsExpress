@@ -1,28 +1,23 @@
 const React = require('react');
 const MakeImageOrText = require('./MakeImageOrText.jsx');
 const TextEditor = require('./TextEditor.jsx');
+const ImageEditor = require('./ImageEditor.jsx');
 class ContentEditor extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isText:true
-    };
-    this.changeEditorType = this.changeEditorType.bind(this);
-  }
-  changeEditorType() {
-    this.setState((prev)=>{
-      return {isText: !prev.isText}
-    });
   }
   render() {
-    const isText = this.state.isText;
+    const isText = this.props.isText;
     return (
     	<div className="content-editor">
-        <MakeImageOrText isText={isText} onClick={this.changeEditorType}/>
+        <MakeImageOrText isText={this.props.isText} onClick={this.props.onChangeType}/>
         { isText ? 
-          <TextEditor id={this.props.id}/> 
+          <TextEditor id={this.props.id} 
+          onChange={this.props.onTextChange}
+          fontSize={this.props.fontSize}
+          content={this.props.textContent}/> 
           : 
-          null 
+          <ImageEditor id={this.props.id} onChange={this.props.onImageChange}/>
         }
       </div>
 

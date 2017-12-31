@@ -1,3 +1,5 @@
+const { $ } = require('./$');
+
 const editorConfig = {
 	customConfig: '',
 	toolbar: [
@@ -6,14 +8,12 @@ const editorConfig = {
 	],
 	removePlugins : 'elementspath',
 	uiColor: '#ffffff',
-	fontSize:"35px",
-	height: '40%',
-	contentsCss: "/css/ckeditor.css"
 };
 
 
-function initEditor(elementId) {
-	CKEDITOR.replace(elementId, editorConfig);
+function initEditor(elementId, startingContent) {
+	CKEDITOR.inline(elementId, editorConfig);
+	CKEDITOR.instances[elementId].setData(startingContent);
 }
 
 function getEditorData(elementId) {
@@ -24,6 +24,15 @@ function unrenderEditor(elementId) {
 	return CKEDITOR.instances[elementId].destroy();
 }
 
+
+function doesContentOverflow(elementId) {
+	const ckeditorElement = $('#' + elementId).nextSibling;
+	const fullHeight = ckeditorElement.scrollHeight;
+	const clientHeight = ckeditorElement.clientHeight;
+	return fullHeight > clientHeight
+}
+
 exports.initEditor = initEditor;
 exports.getEditorData = getEditorData;
 exports.unrenderEditor = unrenderEditor;
+exports.doesContentOverflow = doesContentOverflow;

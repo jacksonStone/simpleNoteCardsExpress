@@ -1,17 +1,51 @@
-	.cke_toolbox {
-		float:right;
-	}
-	.cke_bottom {
-		display:none;
-	}
-	.cke_top {
-		border-bottom: none;
-	}
-	.cke_editable
-	{
-		font-size: 35px;
-	}
-	.content-editor {
-		max-width: 60%;
-		margin: 0 auto;
-	}
+.cke_toolbox {
+	float:right;
+}
+.cke_bottom {
+	display:none;
+}
+.cke_top {
+	border-bottom: none;
+}
+.cke_editable
+{
+	height: 212px;
+	overflow-y: scroll;
+}
+.content-editor {
+	width: 400px;
+	height: 240px;
+	position: relative;
+	margin: 0 auto;
+}
+.text-editor {
+	height: 270px;
+}
+.make-image-or-text {
+	position: absolute;
+	top: -20px;
+ 	right: 10px;
+}
+
+.cke_editable > p {
+	margin: 0;
+}
+
+.size-1 > .cke_editable > p {
+	font-size: 45px;
+}
+
+.size-2 > .cke_editable > p {
+	font-size: 35px;
+}
+
+.size-3 > .cke_editable > p {
+	font-size: 30px;
+}
+
+.size-4 > .cke_editable > p {
+	font-size: 25px;
+}
+.size-5 > .cke_editable > p {
+	font-size: 20px;
+}
