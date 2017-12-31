@@ -1,5 +1,5 @@
 const React = require('react');
-const TextEditor = require('./TextEditor.jsx');
+const ContentEditor = require('./ContentEditor.jsx');
 
 class FullCardEditor extends React.Component {
   constructor(props) {
@@ -8,8 +8,8 @@ class FullCardEditor extends React.Component {
   render() {
     return (
     	<div className="full-text-editor">
-        <TextEditor id="question" key="question"/>
-        <TextEditor id="answer" key="answer"/>
+        <ContentEditor id="question" key="question"/>
+        <ContentEditor id="answer" key="answer"/>
       </div>
     );
   }
