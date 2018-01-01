@@ -12,7 +12,7 @@ const editorConfig = {
 
 
 function initEditor(elementId, startingContent) {
-	CKEDITOR.inline(elementId, editorConfig);
+	const editor = CKEDITOR.replace(elementId, editorConfig);
 	CKEDITOR.instances[elementId].setData(startingContent);
 }
 
@@ -27,8 +27,9 @@ function unrenderEditor(elementId) {
 
 function doesContentOverflow(elementId) {
 	const ckeditorElement = $('#' + elementId).nextSibling;
-	const fullHeight = ckeditorElement.scrollHeight;
-	const clientHeight = ckeditorElement.clientHeight;
+	const ckeditorContents = $(ckeditorElement, '.cke_editable');
+	const fullHeight = ckeditorContents.scrollHeight;
+	const clientHeight = ckeditorContents.clientHeight;
 	return fullHeight > clientHeight
 }
 

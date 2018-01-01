@@ -35,7 +35,6 @@ class TextEditor extends React.Component {
     }
 
     this.pastContent = editorData;
-    debugger;
     onChange(editorData, this.getUpdatedFontSize());
   }
   componentWillUnmount(){

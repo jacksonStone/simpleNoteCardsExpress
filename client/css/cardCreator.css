@@ -22,30 +22,30 @@
 	height: 270px;
 }
 .make-image-or-text {
-	position: absolute;
-	top: -20px;
- 	right: 10px;
+  position: absolute;
+  top: 12px;
+  right: 170px;
 }
 
 .cke_editable > p {
 	margin: 0;
 }
 
-.size-1 > .cke_editable > p {
+.size-1 .cke_contents p {
 	font-size: 45px;
 }
 
-.size-2 > .cke_editable > p {
+.size-2 .cke_contents p {
 	font-size: 35px;
 }
 
-.size-3 > .cke_editable > p {
+.size-3 .cke_contents p{
 	font-size: 30px;
 }
 
-.size-4 > .cke_editable > p {
+.size-4 .cke_contents p {
 	font-size: 25px;
 }
-.size-5 > .cke_editable > p {
+.size-4 .cke_contents p {
 	font-size: 20px;
 }
