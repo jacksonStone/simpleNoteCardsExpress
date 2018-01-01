@@ -4,7 +4,8 @@ module.exports = {
   entry: { 
     landing: './client/js/ui/pages/landing.jsx',
     test: './client/js/tests/testSuite.js',
-    home: './client/js/ui/pages/home.jsx'
+    home: './client/js/ui/pages/home.jsx',
+    decks: './client/js/ui/pages/decks.jsx'
   },
   watch: true,
   output: {

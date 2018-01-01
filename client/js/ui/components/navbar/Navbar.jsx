@@ -1,6 +1,7 @@
 const React = require('react');
 const Logout = require('component/navbar/LogoutButton.jsx');
 const Login = require('component/navbar/LoginButton.jsx');
+const Decks = require('component/navbar/DecksButton.jsx');
 const Signup = require('component/navbar/SignupButton.jsx');
 const { getUser } = require('logic/getUser');
 function Navbar() {
@@ -9,7 +10,10 @@ function Navbar() {
 		<div className="navbar"> 
 			{
 				user ? 
-				<Logout/> : 
+				(<div>
+					<Logout/>
+					<Decks/>
+				 </div>) : 
 				(<div className="login-signup">
 					<Login/>
 					<Signup/>
