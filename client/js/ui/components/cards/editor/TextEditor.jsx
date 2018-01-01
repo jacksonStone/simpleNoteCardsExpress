@@ -1,6 +1,5 @@
 const React = require('react');
-const { initEditor, unrenderEditor, getEditorData, doesContentOverflow } = require('abstract/editor');
-const maxFontSize = 5;
+const { initEditor, unrenderEditor, getEditorData, getFontSize } = require('abstract/editor');
 class TextEditor extends React.Component {
   constructor(props) {
     super(props);
@@ -16,13 +15,7 @@ class TextEditor extends React.Component {
   getUpdatedFontSize(){
     const id = this.props.id;
     const currentNum = this.props.fontSize || 1;
-    
-    if(currentNum >= maxFontSize) return currentNum;
-
-    if(doesContentOverflow(id)) {
-      return currentNum + 1;
-    }
-    return currentNum;
+    return getFontSize(id, currentNum);
   }
   updateDataIfChanged(){
     const id = this.props.id;

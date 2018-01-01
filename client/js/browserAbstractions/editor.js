@@ -10,6 +10,8 @@ const editorConfig = {
 	uiColor: '#ffffff',
 };
 
+const MAX_FONT_SIZE = 5;
+
 
 function initEditor(elementId, startingContent) {
 	const editor = CKEDITOR.replace(elementId, editorConfig);
@@ -24,16 +26,43 @@ function unrenderEditor(elementId) {
 	return CKEDITOR.instances[elementId].destroy();
 }
 
+function getCKEditorEditableElement(elementId) {
+	const ckeditorElement = $('#' + elementId).nextSibling;
+	return $(ckeditorElement, '.cke_editable');
+}
+
+function getCKEditorContent(elementId) {
+	const ckeditorElement = $('#' + elementId).nextSibling;
+	return $(ckeditorElement, '.cke_contents');
+}
+
+function getFontSize(elementId, currentFontSize) {
+	
+	if(currentFontSize >= MAX_FONT_SIZE) return MAX_FONT_SIZE;
+	
+	const contentOverflows = doesContentOverflow(elementId)
+	
+	if(!contentOverflows) {
+		return currentFontSize;
+	}
+
+	scrollToTopOfContent(elementId);
+	return currentFontSize+1;
+}
 
 function doesContentOverflow(elementId) {
-	const ckeditorElement = $('#' + elementId).nextSibling;
-	const ckeditorContents = $(ckeditorElement, '.cke_editable');
-	const fullHeight = ckeditorContents.scrollHeight;
-	const clientHeight = ckeditorContents.clientHeight;
-	return fullHeight > clientHeight
+	const ckeditorEditable = getCKEditorEditableElement(elementId);
+	const fullHeight = ckeditorEditable.scrollHeight;
+	const clientHeight = ckeditorEditable.clientHeight;
+	return fullHeight > clientHeight;
+}
+
+function scrollToTopOfContent(elementId) {
+	const ckeditorContents = getCKEditorContent(elementId);
+	ckeditorContents.scrollTop = 0;
 }
 
 exports.initEditor = initEditor;
 exports.getEditorData = getEditorData;
 exports.unrenderEditor = unrenderEditor;
-exports.doesContentOverflow = doesContentOverflow;
+exports.getFontSize = getFontSize;
