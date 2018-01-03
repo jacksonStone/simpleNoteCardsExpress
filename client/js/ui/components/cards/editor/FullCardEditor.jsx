@@ -1,5 +1,8 @@
 const React = require('react');
 const ContentEditor = require('./ContentEditor.jsx');
+const { getDeckNameFromPage } = require('logic/decks');
+const { getCards } = require('logic/cards');
+const NewCard = require('logic/classes/newCard');
 
 class FullCardEditor extends React.Component {
   constructor(props) {
@@ -21,6 +24,7 @@ class FullCardEditor extends React.Component {
     this.updateQuestionImage = this.updateQuestionImage.bind(this);
     this.changeQuestionType = this.changeQuestionType.bind(this);
     this.changeAnswerType = this.changeAnswerType.bind(this);
+    this.saveCard = this.saveCard.bind(this);
   }
   updateAnswerText(content, fontSize) {
     this.setState({
@@ -54,6 +58,13 @@ class FullCardEditor extends React.Component {
       return {questionIsText: !prev.questionIsText}
     });
   }
+  async saveCard(){
+    const state = this.state;
+    const deckName = getDeckNameFromPage();
+    const newCard = new NewCard(state, deckName);
+    await newCard.save();
+    console.log(await getCards(deckName));
+  }
   render() {
     return (
     	<div className="full-text-editor">
@@ -75,6 +86,7 @@ class FullCardEditor extends React.Component {
           isText={this.state.answerIsText}
           fontSize={this.state.answerFontSize}
           onChangeType={this.changeAnswerType}/>
+        <button onClick={this.saveCard}>Save</button>
       </div>
     );
   }
